@@ -1,0 +1,13 @@
+<z-layout class="rounded-lg overflow-hidden h-dvh w-dvh">
+  <z-sidebar class="bg-slate-900 text-white border-0" [zWidth]="260">
+    <app-sidebar-content />
+  </z-sidebar>
+
+  <z-layout>
+    <z-header class="h-16 px-12 text-white border-0 justify-center">Header</z-header>
+    <z-content class="min-h-[200px] text-white">
+      <router-outlet></router-outlet>
+    </z-content>
+    <z-footer class="h-16 px-12 text-white border-0 justify-center">Footer</z-footer>
+  </z-layout>
+</z-layout>

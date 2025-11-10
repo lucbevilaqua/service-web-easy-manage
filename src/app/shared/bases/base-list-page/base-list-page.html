@@ -1,0 +1,63 @@
+<div class="w-full">
+  <div class="overflow-hidden rounded-md border">
+    <table z-table>
+      <thead z-table-header>
+        <tr z-table-row>
+          @for (header of columns(); track header.field) {
+            <th z-table-head [class]="header.class" [class.w-16]="header.class?.includes('w-16')">
+              {{ header.label }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody z-table-body>
+        @for (item of dataSource(); track item.id) {
+          <tr z-table-row>
+            @for (col of columns(); track $index) {
+              <td z-table-cell>
+                @switch (col.type) {
+                  @case ('badge') {
+                    <z-badge [zType]="getBadgeColor(col, item)">
+                      {{ item[col.field] }}
+                    </z-badge>
+                  }
+
+                  @case ('actions') {
+                    <div class="flex items-center justify-end gap-2">
+                      @if (getActions(col)) {
+                        @for (act of getActions(col); track act.id) {
+                          <button
+                            z-button
+                            [zType]="'ghost'"
+                            [zSize]="'sm'"
+                            class="p-1"
+                            [title]="act.tooltip"
+                            (click)="handleAction(act.id, item)"
+                          >
+                            @if (act.icon) {
+                              <z-icon [zType]="act.icon" />
+                            } @else {
+                              <span class="sr-only">{{ act.tooltip }}</span>
+                            }
+                          </button>
+                        }
+                      }
+                    </div>
+                  }
+
+                  @default {
+                    <div class="lowercase">{{ item[col.field] }}</div>
+                  }
+                }
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr z-table-row>
+            <td z-table-cell [attr.colspan]="4" class="h-24 text-center">No results.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

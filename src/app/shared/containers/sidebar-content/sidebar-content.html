@@ -1,0 +1,54 @@
+<div class="flex flex-col h-full">
+  <!-- user info -->
+  @if (user()) {
+    <div class="p-4 flex items-center gap-3 border-b border-slate-800">
+      @if (userPicture()) {
+        <img [src]="userPicture()" alt="avatar" class="w-10 h-10 rounded-full object-cover" />
+      }
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold truncate">{{ userDisplayName() }}</div>
+        <div class="text-xs text-slate-400 truncate">{{ userEmail() }}</div>
+      </div>
+    </div>
+  }
+
+  <!-- theme toggle -->
+  <div class="p-3 border-b border-slate-800 flex items-center gap-2">
+    <button (click)="toggleTheme()" class="flex items-center gap-2 w-full py-2 px-3 rounded hover:bg-slate-800">
+      <z-icon [zType]="themeIcon()" />
+      <span class="text-sm">Alternar tema</span>
+    </button>
+  </div>
+
+  <!-- menu groups -->
+  <div class="p-3 overflow-auto flex-1">
+    @for (group of menuGroups; track group.name) {
+      <z-sidebar-group class="mb-4">
+        <z-sidebar-group-label class="px-2 text-xs text-slate-400 font-medium mb-2">{{ group.name }}</z-sidebar-group-label>
+
+        <ul class="space-y-1">
+          @for (item of group.items; track item.route) {
+            @if (canShow(item)) {
+              <li>
+                <a [routerLink]="item.route" class="flex items-center gap-3 p-2 rounded hover:bg-slate-800">
+                  <z-icon [zType]="item.icon || 'panel-left'" />
+                  <span class="truncate">{{ item.label }}</span>
+                  @if (item.isBeta) {
+                    <span class="ml-auto text-[10px] bg-amber-400 text-black px-2 py-0.5 rounded-full">BETA</span>
+                  }
+                </a>
+              </li>
+            }
+          }
+        </ul>
+      </z-sidebar-group>
+    }
+  </div>
+
+  <div class="p-3 border-t border-slate-800">
+    <a routerLink="/profile" class="flex items-center gap-2 text-sm text-slate-300 hover:text-white">
+      <z-icon zType="log-out" />
+      Sair
+    </a>
+  </div>
+</div>
