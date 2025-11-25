@@ -25,44 +25,94 @@ const typeList = [
 ];
 
 export const contractConfig: BaseListPageConfig = {
-  title: 'Dashboard',
-  subtitle: 'Manage your data with ease',
+  title: 'Contratos',
+  subtitle: 'Gerencie seus contratos',
   pathDb: 'contracts',
   pageSize: 10,
   orderByField: 'contractName',
   orderByDirection: 'desc',
   columns: [
     {
-      type: 'badge',
-      label: 'Periodo',
-      key: 'visitPeriod',
-      color: (row) => row.visitPeriod === 'Mensal' ? 'default' : 'destructive'
+      type: 'text',
+      label: 'Contrato',
+      key: 'contractName',
     },
     {
       type: 'text',
-      label: 'Name',
-      key: 'contractName'
+      label: 'CNPJ',
+      key: 'cnpj',
     },
     {
       type: 'text',
-      label: 'Email',
-      key: 'type',
-      hiddenOnMobile: true
-    },
-    {
-      type: 'text',
-      label: 'Amount',
+      label: 'Cidade',
       key: 'city',
     },
     {
+      type: 'badge',
+      label: 'Tipo',
+      key: 'type',
+      color: (row) => row.type === 'privado' ? 'info' : 'neutral'
+    },
+    {
+      type: 'badge',
+      label: 'Periodo',
+      key: 'visitPeriod',
+      color: (row) => {
+        switch (row.visitPeriod) {
+          case 'mensal': return 'success';
+          case 'bimestral': return 'info';
+          case 'trimestral': return 'warning';
+          case 'semestral': return 'secondary';
+          case 'anual': return 'neutral';
+          default: return 'outline';
+        }
+      }
+    },
+    {
+      type: 'badge',
+      label: 'Status',
+      key: 'status',
+      color: (row) => {
+        if (!row.validUntil) return 'neutral';
+        const validUntil = row.validUntil.toDate ? row.validUntil.toDate() : new Date(row.validUntil);
+        const today = new Date();
+        const thirtyDaysFromNow = new Date();
+        thirtyDaysFromNow.setDate(today.getDate() + 30);
+        
+        if (validUntil < today) return 'destructive';
+        return validUntil < thirtyDaysFromNow ? 'warning' : 'success';
+      },
+      format: (value, row) => {
+        if (!row.validUntil) return 'N/A';
+        const validUntil = row.validUntil.toDate ? row.validUntil.toDate() : new Date(row.validUntil);
+        const today = new Date();
+        const thirtyDaysFromNow = new Date();
+        thirtyDaysFromNow.setDate(today.getDate() + 30);
+        
+        if (validUntil < today) return 'Expirado';
+        return validUntil < thirtyDaysFromNow ? 'Expira em breve' : 'Vigente';
+      }
+    },
+    {
       type: 'date',
-      label: 'Created',
+      label: 'Vigência',
       key: 'validUntil',
       format: 'short',
       hiddenOnMobile: true
     },
   ],
   filters: [
+    {
+      key: 'cnpj',
+      label: 'CNPJ',
+      type: 'text',
+    },
+    {
+      key: 'type',
+      label: 'Tipo',
+      type: 'select',
+      options: typeList,
+    },
     {
       key: 'visitPeriod',
       label: 'Periodo',
@@ -80,6 +130,12 @@ export const contractConfig: BaseListPageConfig = {
     {
       key: 'contractName',
       label: 'Name',
+      type: 'text',
+      required: true
+    },
+    {
+      key: 'cnpj',
+      label: 'CNPJ',
       type: 'text',
       required: true
     },

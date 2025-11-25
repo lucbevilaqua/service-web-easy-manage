@@ -70,7 +70,8 @@ import {
   Lock,
   Plus,
   Trash,
-  Notebook
+  Notebook,
+  ListFilter
 } from 'lucide-angular';
 
 export const ZARD_ICONS = {
@@ -115,6 +116,7 @@ export const ZARD_ICONS = {
   file: File,
   notebook: Notebook,
   'file-text': FileText,
+  'list-filter': ListFilter,
   'layout-dashboard': LayoutDashboard,
   'loader-circle': LoaderCircle,
   save: Save,
