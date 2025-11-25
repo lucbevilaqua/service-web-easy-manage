@@ -19,6 +19,9 @@
       "@shared/*": [
         "src/app/shared/*"
       ],
+      "@ui/*": [
+        "src/app/ui/*"
+      ],
       "@core/*": [
         "src/app/core/*"
       ]

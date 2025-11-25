@@ -5,8 +5,7 @@ import {
   output, 
   model 
 } from '@angular/core';
-import { ZardButtonComponent } from '@shared/components/button/button.component';
-import { ZardIconComponent } from '@shared/components/icon/icon.component';
+import { ZardButtonComponent, ZardIconComponent } from '@ui/components';
 
 @Component({
   selector: 'app-confirm-dialog',

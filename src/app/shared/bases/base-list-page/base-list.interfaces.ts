@@ -1,6 +1,6 @@
-import { ZardBadgeVariants } from "@shared/components/badge/badge.variants";
+import { ZardBadgeVariants } from "src/app/ui/components/badge/badge.variants";
 import { CreateConfig } from "@shared/components/create-modal/create-modal.interfaces";
-import { ZardIcon } from "@shared/components/icon/icons";
+import { ZardIcon } from "src/app/ui/components/icon/icons";
 
 export type BadgeColorFn = (row: any) => ZardBadgeVariants['zType'];
 

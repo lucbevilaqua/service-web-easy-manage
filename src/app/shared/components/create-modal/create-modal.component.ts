@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FirestoreService } from '@core/services/firestore.service';
-import { Z_MODAL_DATA } from '../dialog/dialog.service';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FormConfig } from '@shared/interfaces/form-config.interface';
+import { Z_MODAL_DATA } from '@ui/components/dialog/dialog.service';
 
 interface CreateDialogData {
   config: FormConfig[];

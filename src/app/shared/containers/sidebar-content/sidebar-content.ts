@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { ZardIconComponent } from '@shared/components/icon/icon.component';
-import { ZardIcon } from '@shared/components/icon/icons';
-import { SidebarGroupComponent, SidebarGroupLabelComponent } from '@shared/components/layout/sidebar.component';
 import { DarkModeService } from '@shared/services/darkmode.service';
+import { ZardIconComponent } from '@ui/components';
+import { ZardIcon } from '@ui/components/icon/icons';
+import { SidebarGroupLabelComponent, SidebarGroupComponent } from '@ui/components/layout/sidebar.component';
 import { extractRoles, hasAllRoles } from 'src/app/core/auth/roles';
 import { MENU_DATA } from 'src/app/core/data/menu.data';
 

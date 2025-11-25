@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ZardIconComponent } from '@shared/components/icon/icon.component';
+import { ZardIconComponent } from 'src/app/ui/components/icon/icon.component';
 
 @Component({
   selector: 'app-not-authorized',

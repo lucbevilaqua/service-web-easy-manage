@@ -1,16 +1,10 @@
-import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormConfig } from '@shared/interfaces/form-config.interface';
-import { ZardInputGroupComponent } from '@shared/components/input-group/input-group.component';
-import { ZardSelectComponent } from '@shared/components/select/select.component';
-import { ZardSelectItemComponent } from '@shared/components/select/select-item.component';
-import { ZardCheckboxComponent } from '@shared/components/checkbox/checkbox.component';
-import { ZardRadioComponent } from '@shared/components/radio/radio.component';
-import { ZardSwitchComponent } from '@shared/components/switch/switch.component';
-import { ZardCalendarComponent } from '@shared/components/calendar/calendar.component';
-import { ZardFormModule } from '@shared/components/form/form.module';
-import { ZardInputDirective } from '@shared/components/input/input.directive';
-import { ZardDatePickerComponent } from '../date-picker/date-picker.component';
+import { ZardInputGroupComponent,  ZardSelectComponent, ZardCheckboxComponent, ZardRadioComponent, ZardSwitchComponent, ZardInputDirective } from '@ui/components';
+import { ZardFormModule } from 'src/app/ui/components/form/form.module';
+import { ZardSelectItemComponent } from 'src/app/ui/components/select/select-item.component';
+import { ZardDatePickerComponent } from '../../../ui/components/date-picker/date-picker.component';
 
 @Component({
   selector: 'app-dynamic-form',

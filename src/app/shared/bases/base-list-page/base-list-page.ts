@@ -9,10 +9,9 @@ import {
   OnInit,
   OnDestroy
 } from '@angular/core';
-import { ZardBadgeComponent } from '@shared/components/badge/badge.component';
-import { ZardBadgeVariants } from '@shared/components/badge/badge.variants';
-import { ZardButtonComponent } from '@shared/components/button/button.component';
-import { ZardIconComponent } from '@shared/components/icon/icon.component';
+import { ZardBadgeComponent } from 'src/app/ui/components/badge/badge.component';
+import { ZardBadgeVariants } from 'src/app/ui/components/badge/badge.variants';
+import { ZardIconComponent } from 'src/app/ui/components/icon/icon.component';
 import { 
   ZardTableComponent, 
   ZardTableHeaderComponent, 
@@ -20,9 +19,7 @@ import {
   ZardTableRowComponent, 
   ZardTableHeadComponent, 
   ZardTableCellComponent 
-} from '@shared/components/table/table.component';
-import { ZardInputGroupComponent } from '@shared/components/input-group/input-group.component';
-import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
+} from 'src/app/ui/components/table/table.component';
 import { FilterModalComponent } from '@shared/components/filter-modal/filter-modal.component';
 import { CreateModalComponent } from '@shared/components/create-modal/create-modal.component';
 import { EditModalComponent } from '@shared/components/edit-modal/edit-modal.component';
@@ -40,7 +37,8 @@ import {
 } from './base-list.interfaces';
 import { FirestoreService } from '@core/services/firestore.service';
 import type { DocumentSnapshot } from 'firebase/firestore';
-import { ZardDialogService } from '@shared/components/dialog/dialog.service';
+import { ZardButtonComponent, ZardInputGroupComponent, ZardPaginationComponent } from '@ui/components';
+import { ZardDialogService } from '@ui/components/dialog/dialog.service';
 
 @Component({
   selector: 'app-base-list-page',
