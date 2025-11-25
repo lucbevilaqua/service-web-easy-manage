@@ -1,0 +1,7 @@
+<app-dynamic-form [formGroup]="form" [config]="config()" />
+
+@if (error()) {
+  <div class="text-sm text-destructive font-medium p-2 bg-destructive/10 rounded mt-4">
+    {{ error() }}
+  </div>
+}

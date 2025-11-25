@@ -67,7 +67,10 @@ import {
   type LucideIconData,
   Circle,
   Inbox,
-  Lock
+  Lock,
+  Plus,
+  Trash,
+  Notebook
 } from 'lucide-angular';
 
 export const ZARD_ICONS = {
@@ -107,7 +110,10 @@ export const ZARD_ICONS = {
   folder: Folder,
   'folder-open': FolderOpen,
   'folder-plus': FolderPlus,
+  trash: Trash,
+  plus: Plus,
   file: File,
+  notebook: Notebook,
   'file-text': FileText,
   'layout-dashboard': LayoutDashboard,
   'loader-circle': LoaderCircle,

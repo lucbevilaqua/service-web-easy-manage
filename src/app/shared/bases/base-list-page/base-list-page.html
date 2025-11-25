@@ -1,63 +1,177 @@
-<div class="w-full">
-  <div class="overflow-hidden rounded-md border">
-    <table z-table>
-      <thead z-table-header>
-        <tr z-table-row>
-          @for (header of columns(); track header.field) {
-            <th z-table-head [class]="header.class" [class.w-16]="header.class?.includes('w-16')">
-              {{ header.label }}
-            </th>
-          }
-        </tr>
-      </thead>
-      <tbody z-table-body>
-        @for (item of dataSource(); track item.id) {
+<div class="w-full h-full flex flex-col">
+  <!-- header: title and subtitle -->
+  <div class="mb-4">
+    <h1 class="text-2xl md:text-3xl font-semibold mb-2">{{ title() }}</h1>
+    @if (subtitle()) {
+      <div class="text-sm md:text-base text-muted-foreground mb-4">{{ subtitle() }}</div>
+    }
+    
+    <!-- search input and filter button below subtitle -->
+    <div class="flex items-center gap-2 w-full">
+      <div class="flex-1 max-w-full md:max-w-md">
+        <z-input-group [class]="'w-full'" [zPrefix]="''">
+          <div class="flex items-center gap-2 px-2">
+            <z-icon zType="search" />
+          </div>
+          <input 
+            z-input 
+            type="search" 
+            placeholder="Search..." 
+            [value]="searchTerm()"
+            (input)="onSearchChange($event)" 
+            class="w-full" 
+          />
+        </z-input-group>
+      </div>
+      @if (hasFilterConfig()) {
+        <button
+          z-button
+          [zType]="'outline'"
+          [zSize]="'default'"
+          (click)="toggleFilterModal()"
+          class="shrink-0"
+        >
+          <z-icon zType="settings" />
+          <span class="hidden md:inline">Filters</span>
+        </button>
+      }
+      @if (hasCreateConfig()) {
+        <button
+          z-button
+          [zType]="'outline'"
+          [zSize]="'default'"
+          (click)="toggleCreateModal()"
+          class="shrink-0"
+        >
+          <z-icon zType="plus" />
+          <span class="hidden md:inline">Create item</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- table container with horizontal scroll on small screens -->
+  <div class="flex-1 overflow-auto rounded-md border">
+    <div class="min-w-full overflow-x-auto">
+      <table z-table class="w-full">
+        <thead z-table-header>
           <tr z-table-row>
-            @for (col of columns(); track $index) {
-              <td z-table-cell>
-                @switch (col.type) {
-                  @case ('badge') {
-                    <z-badge [zType]="getBadgeColor(col, item)">
-                      {{ item[col.field] }}
-                    </z-badge>
+            @for (header of columns(); track header.key) {
+              <th 
+                z-table-head 
+                [class]="header.class" 
+                [class.w-16]="header.class?.includes('w-16')"
+                [class.hidden]="header.hiddenOnMobile ?? false"
+                [class.md:table-cell]="header.hiddenOnMobile"
+              >
+                {{ header.label }}
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody z-table-body>
+          @for (item of dataSource(); track trackByItem($index, item)) {
+            <tr z-table-row>
+              @for (col of columns(); track $index) {
+                <td 
+                  z-table-cell
+                  [class.hidden]="col.hiddenOnMobile"
+                  [class.md:table-cell]="col.hiddenOnMobile"
+                >
+                  @switch (col.type) {
+                    @case ('badge') {
+                      <z-badge [zType]="getBadgeColor(col, item)">
+                        {{ formatCellValue(col, item[col.key], item) }}
+                      </z-badge>
+                    }
+
+                    @case ('actions') {
+                      <div class="flex items-center justify-end gap-2">
+                        @if (getActions(col)) {
+                          @for (act of getActions(col); track act.id) {
+                            <button
+                              z-button
+                              [zType]="'ghost'"
+                              [zSize]="'sm'"
+                              class="p-1"
+                              [title]="act.tooltip"
+                              (click)="handleAction(act.id, item)"
+                            >
+                              @if (act.icon) {
+                                <z-icon [zType]="act.icon" />
+                              } @else {
+                                <span class="sr-only">{{ act.tooltip }}</span>
+                              }
+                            </button>
+                          }
+                        }
+                      </div>
+                    }
+
+                  @case ('date') {
+                    <div class="truncate max-w-[200px] md:max-w-none" [title]="formatCellValue(col, item[col.key], item)">
+                      {{ formatCellValue(col, item[col.key], item) }}
+                    </div>
                   }
 
-                  @case ('actions') {
-                    <div class="flex items-center justify-end gap-2">
-                      @if (getActions(col)) {
-                        @for (act of getActions(col); track act.id) {
-                          <button
-                            z-button
-                            [zType]="'ghost'"
-                            [zSize]="'sm'"
-                            class="p-1"
-                            [title]="act.tooltip"
-                            (click)="handleAction(act.id, item)"
-                          >
-                            @if (act.icon) {
-                              <z-icon [zType]="act.icon" />
-                            } @else {
-                              <span class="sr-only">{{ act.tooltip }}</span>
-                            }
-                          </button>
-                        }
-                      }
+                  @case ('number') {
+                    <div class="truncate max-w-[200px] md:max-w-none text-right" [title]="formatCellValue(col, item[col.key], item)">
+                      {{ formatCellValue(col, item[col.key], item) }}
+                    </div>
+                  }
+
+                  @case ('boolean') {
+                    <div class="truncate max-w-[200px] md:max-w-none">
+                      {{ formatCellValue(col, item[col.key], item) }}
                     </div>
                   }
 
                   @default {
-                    <div class="lowercase">{{ item[col.field] }}</div>
+                    <div class="truncate max-w-[200px] md:max-w-none" [title]="formatCellValue(col, item[col.key], item)">
+                      {{ formatCellValue(col, item[col.key], item) }}
+                    </div>
                   }
+                  }
+                </td>
+              }
+            </tr>
+          } @empty {
+            <tr z-table-row>
+              <td z-table-cell [attr.colspan]="columns().length" class="h-24 text-center">
+                @if (loading()) {
+                  <div class="flex items-center justify-center">
+                    <span>Loading...</span>
+                  </div>
+                } @else {
+                  <span>No results.</span>
                 }
               </td>
-            }
-          </tr>
-        } @empty {
-          <tr z-table-row>
-            <td z-table-cell [attr.colspan]="4" class="h-24 text-center">No results.</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <!-- pagination (backend-driven) -->
+  <div class="mt-4 p-2 md:p-4 flex items-center justify-center md:justify-end">
+    <z-pagination 
+      [zPageIndex]="currentPage()" 
+      [zTotal]="totalPages()" 
+      (zPageIndexChange)="onPageChange($event)" 
+    />
+  </div>
+
+
+  <!-- Confirm Delete Dialog -->
+  <app-confirm-dialog
+    [(isOpen)]="isConfirmDialogOpen"
+    title="Delete Item"
+    message="Are you sure you want to delete this item? This action cannot be undone."
+    confirmText="Delete"
+    cancelText="Cancel"
+    [confirmType]="'destructive'"
+    (onConfirm)="confirmDelete()"
+    (onCancel)="cancelDelete()"
+  />
 </div>

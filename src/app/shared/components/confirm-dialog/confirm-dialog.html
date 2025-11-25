@@ -1,0 +1,45 @@
+@if (isOpen()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center">
+    <!-- Backdrop -->
+    <div 
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm"
+      (click)="handleCancel()"
+    ></div>
+
+    <!-- Dialog -->
+    <div 
+      class="relative z-50 w-full max-w-md bg-card border border-border rounded-lg shadow-lg p-6 m-4"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Header -->
+      <div class="flex items-center gap-4 mb-4">
+        <div class="flex-shrink-0">
+          <z-icon zType="triangle-alert" class="text-destructive" />
+        </div>
+        <h2 class="text-xl font-semibold">{{ title() }}</h2>
+      </div>
+
+      <!-- Message -->
+      <p class="text-muted-foreground mb-6">{{ message() }}</p>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-end gap-2">
+        <button
+          z-button
+          [zType]="'outline'"
+          (click)="handleCancel()"
+        >
+          {{ cancelText() }}
+        </button>
+        <button
+          z-button
+          [zType]="confirmType()"
+          (click)="handleConfirm()"
+        >
+          {{ confirmText() }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+

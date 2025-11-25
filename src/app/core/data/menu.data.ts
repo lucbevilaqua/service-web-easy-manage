@@ -4,6 +4,11 @@ export const MENU_DATA: MenuGroup[] = [
   {
     name: 'Gestão operacional',
     items: [
+      {
+        label: 'Contratos',
+        route: '/contracts',
+        icon: 'notebook'
+      }
     ],
   },
 ]

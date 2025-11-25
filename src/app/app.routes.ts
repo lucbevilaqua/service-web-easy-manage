@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuardFn } from '@auth0/auth0-angular';
 import { AppLayout } from '@shared/containers/app-layout/app-layout';
+import { contractConfig } from './pages/configs/contract';
 
 export const routes: Routes = [
   {
@@ -17,8 +18,11 @@ export const routes: Routes = [
     canActivate: [authGuardFn],
     children: [
       {
-        path: 'dashboard',
-        loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+        path: 'contracts',
+        loadComponent: () => import('./shared/bases/base-list-page/base-list-page').then(m => m.BaseListPage),
+        data: {
+          config: contractConfig,
+        }
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

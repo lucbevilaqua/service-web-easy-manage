@@ -1,0 +1,8 @@
+/* Responsive layout styles */
+@media (max-width: 768px) {
+  z-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
