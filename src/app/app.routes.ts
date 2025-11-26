@@ -21,7 +21,6 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('./shared/bases/base-dashboard/base-dashboard-page').then(m => m.BaseDashboardPage),
-        canActivate: [authGuardFn],
         data: {
           config: dashboardConfig,
         }
