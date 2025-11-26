@@ -73,7 +73,9 @@ import {
   Plus,
   Trash,
   Notebook,
-  ListFilter
+  ListFilter,
+  ShoppingCart,
+  Package
 } from 'lucide-angular';
 
 export const ZARD_ICONS = {
@@ -152,6 +154,8 @@ export const ZARD_ICONS = {
   'arrow-left': ChevronLeft,
   'trending-up': TrendingUp,
   'trending-down': TrendingDown,
+  'shopping-cart': ShoppingCart,
+  package: Package,
 } as const satisfies Record<string, LucideIconData>;
 
 export declare type ZardIcon = keyof typeof ZARD_ICONS | LucideIconData;
