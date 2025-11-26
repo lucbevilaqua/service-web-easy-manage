@@ -287,6 +287,7 @@ export class BaseListPage implements OnInit, OnDestroy {
           item: item
         },
         zOkText: 'Save',
+        zOkDisabled: (instance: EditModalComponent) => instance.form.invalid || instance.loading(),
         zOnOk: instance => instance.update().then(() => this.loadData()),
       });
       return;
@@ -364,6 +365,8 @@ export class BaseListPage implements OnInit, OnDestroy {
         pathDb: this.pathDb()
       },
       zOkText: 'Create',
+      zMaskClosable: false,
+      zOkDisabled: (instance: CreateModalComponent) => instance.form.invalid || instance.loading(),
       zOnOk: instance => instance.create(),
     });
   }

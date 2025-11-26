@@ -3,7 +3,6 @@ import {
   Component, 
   signal, 
   inject,
-  OnInit,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FirestoreService } from '@core/services/firestore.service';
@@ -27,7 +26,7 @@ interface CreateDialogData {
   styleUrl: './create-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateModalComponent implements OnInit {
+export class CreateModalComponent {
   private data: CreateDialogData = inject(Z_MODAL_DATA);
   private fb = inject(FormBuilder);
   private firestoreService = inject(FirestoreService);
@@ -39,7 +38,7 @@ export class CreateModalComponent implements OnInit {
   readonly loading = signal<boolean>(false);
   readonly error = signal<string | null>(null);
 
-  ngOnInit(): void {
+  constructor() {
     this.initForm();
   }
 

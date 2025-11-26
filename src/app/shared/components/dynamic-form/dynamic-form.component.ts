@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ZardInputGroupComponent,  ZardSelectComponent, ZardCheckboxComponent, ZardRadioComponent, ZardSwitchComponent, ZardInputDirective } from '@ui/components';
 import { ZardFormModule } from 'src/app/ui/components/form/form.module';

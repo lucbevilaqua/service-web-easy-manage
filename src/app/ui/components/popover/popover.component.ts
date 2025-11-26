@@ -342,7 +342,15 @@ export class ZardPopoverDirective implements OnInit, OnDestroy {
       .subscribe(event => {
         const clickTarget = event.target as HTMLElement;
 
+        // Check if click is inside the trigger element
         if (this.nativeElement.contains(clickTarget)) {
+          return;
+        }
+
+        // Check if click is inside another overlay (like a select dropdown or nested popover)
+        // We look for .cdk-overlay-pane that is NOT our own overlay pane
+        const clickedOverlayPane = clickTarget.closest('.cdk-overlay-pane');
+        if (clickedOverlayPane && clickedOverlayPane !== this.overlayRef?.overlayElement) {
           return;
         }
 

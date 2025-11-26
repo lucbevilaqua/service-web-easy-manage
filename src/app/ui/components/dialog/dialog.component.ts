@@ -27,6 +27,8 @@ import type { ZardIcon } from 'src/app/ui/components/icon/icons';
 // Used by the NgModule provider definition
 
 export type OnClickCallback<T> = (instance: T) => false | void | object;
+export type OnDisabledCallback<T> = (instance: T) => boolean;
+
 export class ZardDialogOptions<T, U> {
   zCancelIcon?: ZardIcon;
   zCancelText?: string | null;
@@ -38,7 +40,7 @@ export class ZardDialogOptions<T, U> {
   zHideFooter?: boolean;
   zMaskClosable?: boolean;
   zOkDestructive?: boolean;
-  zOkDisabled?: boolean;
+  zOkDisabled?: boolean | OnDisabledCallback<T>;
   zOkIcon?: ZardIcon;
   zOkText?: string | null;
   zOnCancel?: EventEmitter<T> | OnClickCallback<T> = () => {};
@@ -92,7 +94,7 @@ export class ZardDialogOptions<T, U> {
         }
 
         @if (config.zOkText !== null) {
-          <button data-testid="z-ok-button" z-button [zType]="config.zOkDestructive ? 'destructive' : 'default'" [disabled]="config.zOkDisabled" (click)="onOkClick()">
+          <button data-testid="z-ok-button" z-button [zType]="config.zOkDestructive ? 'destructive' : 'default'" [disabled]="getOkDisabled()" (click)="onOkClick()">
             @if (config.zOkIcon) {
               <z-icon [zType]="config.zOkIcon" />
             }
@@ -180,6 +182,13 @@ export class ZardDialogComponent<T, U> extends BasePortalOutlet {
 
   onCloseClick() {
     this.cancelTriggered.emit();
+  }
+
+  getOkDisabled(): boolean {
+    if (typeof this.config.zOkDisabled === 'function') {
+      return this.config.zOkDisabled(this.dialogRef?.componentInstance as T);
+    }
+    return this.config.zOkDisabled ?? false;
   }
 }
 

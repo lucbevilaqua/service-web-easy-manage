@@ -109,14 +109,19 @@ export class ZardDatePickerComponent implements ControlValueAccessor {
     return this.formatDate(date, this.zFormat());
   });
 
+  private onChange: (value: Date | null) => void = () => {};
+  private onTouched: () => void = () => {};
+
   writeValue(obj: any): void {
     this.value.set(obj);
   }
 
   registerOnChange(fn: any): void {
+    this.onChange = fn;
   }
 
   registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
@@ -128,6 +133,8 @@ export class ZardDatePickerComponent implements ControlValueAccessor {
     const singleDate = Array.isArray(date) ? (date[0] ?? null) : date;
     this.dateChange.emit(singleDate);
     this.value.set(singleDate);
+    this.onChange(singleDate);
+    this.onTouched();
     this.popoverDirective().hide();
   }
 
