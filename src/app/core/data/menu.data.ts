@@ -2,13 +2,11 @@ import { MenuGroup } from "@shared/containers/sidebar-content/sidebar-content";
 
 export const MENU_DATA: MenuGroup[] = [
   {
-    name: 'Gestão operacional',
+    name: 'Geral',
     items: [
-      {
-        label: 'Contratos',
-        route: '/contracts',
-        icon: 'notebook'
-      }
+      { label: 'Dashboard', route: '/dashboard', icon: 'layout-dashboard' },
+      { label: 'Contratos', route: '/contracts', icon: 'file-text' },
     ],
   },
 ]
+

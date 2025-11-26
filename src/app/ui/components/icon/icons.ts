@@ -58,6 +58,8 @@ import {
   TextAlignCenter,
   TextAlignEnd,
   TextAlignStart,
+  TrendingDown,
+  TrendingUp,
   TriangleAlert,
   Underline,
   User,
@@ -148,6 +150,8 @@ export const ZARD_ICONS = {
   smartphone: Smartphone,
   tablet: Tablet,
   'arrow-left': ChevronLeft,
+  'trending-up': TrendingUp,
+  'trending-down': TrendingDown,
 } as const satisfies Record<string, LucideIconData>;
 
 export declare type ZardIcon = keyof typeof ZARD_ICONS | LucideIconData;

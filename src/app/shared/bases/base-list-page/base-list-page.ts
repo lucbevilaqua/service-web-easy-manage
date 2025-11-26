@@ -9,6 +9,7 @@ import {
   OnInit,
   OnDestroy
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ZardBadgeComponent } from 'src/app/ui/components/badge/badge.component';
 import { ZardBadgeVariants } from 'src/app/ui/components/badge/badge.variants';
 import { ZardIconComponent } from 'src/app/ui/components/icon/icon.component';
@@ -158,8 +159,17 @@ export class BaseListPage implements OnInit, OnDestroy {
   constructor() {
   }
 
+  private readonly route = inject(ActivatedRoute);
+
   ngOnInit(): void {
-    this.loadData();
+    // Subscribe to query params to handle initial filters from URL
+    this.route.queryParams.subscribe(params => {
+      if (Object.keys(params).length > 0) {
+        const filters = { ...this.appliedFilters(), ...params };
+        this.appliedFilters.set(filters);
+      }
+      this.loadData();
+    });
   }
 
   ngOnDestroy(): void {
