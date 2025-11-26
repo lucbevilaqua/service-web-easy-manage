@@ -5,7 +5,8 @@ import { ZardFormModule } from 'src/app/ui/components/form/form.module';
 import { ZardSelectItemComponent } from 'src/app/ui/components/select/select-item.component';
 import { ZardDatePickerComponent } from '../../../ui/components/date-picker/date-picker.component';
 import { FirestoreService } from '@core/services/firestore.service';
-import { DynamicFieldConfig, SelectOption } from '@shared/interfaces/form-config.interface';
+import { DynamicFieldConfig } from '@shared/interfaces/form-config.interface';
+import { ZardComboboxComponent, ZardComboboxOption } from '@ui/components/combobox/combobox.component';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -20,7 +21,8 @@ import { DynamicFieldConfig, SelectOption } from '@shared/interfaces/form-config
     ZardSwitchComponent,
     ZardFormModule,
     ZardInputDirective,
-    ZardDatePickerComponent
+    ZardDatePickerComponent,
+    ZardComboboxComponent
   ],
   templateUrl: './dynamic-form.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -32,7 +34,7 @@ export class DynamicFormComponent implements OnInit {
   readonly config = input.required<DynamicFieldConfig[]>();
 
   // Signal to store dynamically loaded options for each field
-  protected readonly dynamicOptions = new Map<string, SelectOption[]>();
+  protected readonly dynamicOptions = new Map<string, ZardComboboxOption[]>();
 
   async ngOnInit(): Promise<void> {
     await this.loadDynamicLists();
@@ -53,7 +55,7 @@ export class DynamicFormComponent implements OnInit {
     }
   }
 
-  getFieldOptions(field: DynamicFieldConfig): SelectOption[] {
+  getFieldOptions(field: DynamicFieldConfig): ZardComboboxOption[] {
     // Return dynamic options if available, otherwise return static options
     return this.dynamicOptions.get(field.key) || field.options || [];
   }

@@ -70,7 +70,7 @@ export const serviceTicketsConfig: BaseListPageConfig = {
     {
       key: 'contractId',
       label: 'Contrato',
-      type: 'select',
+      type: 'combobox',
       placeholder: 'Filtrar por contrato',
       listEntity: 'contracts',
       listMapFn: (data: any) => ({
@@ -119,7 +119,7 @@ export const serviceTicketsConfig: BaseListPageConfig = {
     {
       key: 'contractId',
       label: 'Contrato',
-      type: 'select',
+      type: 'combobox',
       placeholder: 'Selecione um contrato',
       required: true,
       listEntity: 'contracts',

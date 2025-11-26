@@ -16,6 +16,16 @@
               </z-select>
             }
 
+            @case('combobox') {
+              <z-combobox
+                [formControlName]="field.key"
+                [options]="getFieldOptions(field)"
+                [placeholder]="field.placeholder || 'Select an option'"
+                searchPlaceholder="Search..."
+                emptyText="No options found."
+              />
+            }
+
             @case ('checkbox') {
               <span 
                 z-checkbox
