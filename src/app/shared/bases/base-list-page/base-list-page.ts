@@ -25,8 +25,6 @@ import { FilterModalComponent } from '@shared/components/filter-modal/filter-mod
 import { CreateModalComponent } from '@shared/components/create-modal/create-modal.component';
 import { EditModalComponent } from '@shared/components/edit-modal/edit-modal.component';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
-import { FilterConfig } from '@shared/components/filter-modal/filter-modal.interfaces';
-import { CreateConfig } from '@shared/components/create-modal/create-modal.interfaces';
 import { 
   BadgeColumn, 
   Column, 
@@ -40,6 +38,7 @@ import { FirestoreService } from '@core/services/firestore.service';
 import type { DocumentSnapshot } from 'firebase/firestore';
 import { ZardButtonComponent, ZardInputGroupComponent, ZardPaginationComponent } from '@ui/components';
 import { ZardDialogService } from '@ui/components/dialog/dialog.service';
+import { DynamicFieldConfig } from '@shared/interfaces/form-config.interface';
 
 @Component({
   selector: 'app-base-list-page',
@@ -66,8 +65,8 @@ export class BaseListPage implements OnInit, OnDestroy {
 
   // Input signals
   readonly config = input.required<BaseListPageConfig>();
-  readonly filterConfig = computed<FilterConfig[]>(() => this.config().filters || []);
-  readonly createConfig = computed<CreateConfig[]>(() => this.config().createConfig || []);
+  readonly filterConfig = computed<DynamicFieldConfig[]>(() => this.config().filters || []);
+  readonly createConfig = computed<DynamicFieldConfig[]>(() => this.config().createConfig || []);
   // Output signals
   readonly onAction = output<{ actionId: string; item: any }>();
   readonly onRowClick = output<any>();

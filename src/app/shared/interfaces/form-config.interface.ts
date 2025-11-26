@@ -1,17 +1,21 @@
-import { CreateFieldType, CreateOption } from '../components/create-modal/create-modal.interfaces';
+export type FormFieldType = 'text' | 'date' | 'select' | 'number' | 'checkbox' | 'textarea' | 'radio' | 'switch';
+export type SelectOption = {
+  label: string;
+  value: any;
+}
 
-export type FormFieldType = CreateFieldType;
-export type FormOption = CreateOption;
-
-export interface FormConfig {
+export interface DynamicFieldConfig {
   key: string;
   label: string;
   type: FormFieldType;
   required?: boolean;
   placeholder?: string;
-  options?: FormOption[]; // For select, radio
+  options?: SelectOption[]; // For select type
   defaultValue?: any;
   min?: number | string; // For number
   max?: number | string; // For number
   step?: number; // For number
+  colSpan?: number; // Grid column span (1-4)
+  listEntity?: string; // Firestore collection path for dynamic options
+  listMapFn?: (data: any) => SelectOption; // Map function to transform Firestore data to options
 }

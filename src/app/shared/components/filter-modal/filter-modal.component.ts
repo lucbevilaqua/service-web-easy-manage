@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
-import { FormConfig } from '@shared/interfaces/form-config.interface';
+import { DynamicFieldConfig } from '@shared/interfaces/form-config.interface';
 import { Z_MODAL_DATA } from '@ui/components/dialog/dialog.service';
 
 interface FilterDialogData {
-  config: FormConfig[];
+  config: DynamicFieldConfig[];
   initialValues?: Record<string, any>;
 }
 

@@ -26,7 +26,7 @@ const typeList = [
 
 export const contractConfig: BaseListPageConfig = {
   title: 'Contratos',
-  subtitle: 'Gerencie seus contratos',
+  subtitle: 'Visualize e gerencie todos os seus contratos de serviço.',
   pathDb: 'contracts',
   pageSize: 10,
   orderByField: 'contractName',

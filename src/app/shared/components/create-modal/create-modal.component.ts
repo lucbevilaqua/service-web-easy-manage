@@ -8,11 +8,11 @@ import {
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FirestoreService } from '@core/services/firestore.service';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
-import { FormConfig } from '@shared/interfaces/form-config.interface';
 import { Z_MODAL_DATA } from '@ui/components/dialog/dialog.service';
+import { DynamicFieldConfig } from '@shared/interfaces/form-config.interface';
 
 interface CreateDialogData {
-  config: FormConfig[];
+  config: DynamicFieldConfig[];
   pathDb: string;
 }
 

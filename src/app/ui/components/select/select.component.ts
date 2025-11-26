@@ -7,6 +7,7 @@ import {
   Component,
   computed,
   contentChildren,
+  effect,
   ElementRef,
   forwardRef,
   inject,
@@ -131,6 +132,7 @@ export class ZardSelectComponent implements ControlValueAccessor, AfterContentIn
 
   private onChange: OnChangeType = (_value: string) => {
     // ControlValueAccessor onChange callback
+    this.zSelectionChange.emit(_value);
   };
 
   private onTouched: OnTouchedType = () => {
@@ -148,18 +150,30 @@ export class ZardSelectComponent implements ControlValueAccessor, AfterContentIn
     ),
   );
 
+  constructor() {
+    effect(() => {
+      if (this.selectItems()) {
+        this.setSelectHost();
+      }
+    })
+  }
+
   ngAfterContentInit() {
     // Setup select host reference for each item
-    for (const item of this.selectItems()) {
+    this.setSelectHost();
+  }
+
+  ngOnDestroy() {
+    this.destroyOverlay();
+  }
+
+  setSelectHost(): void {
+     for (const item of this.selectItems()) {
       item.setSelectHost({
         selectedValue: () => (this.zMultiple() ? (this.zValue() as string[]) : [this.zValue() as string]),
         selectItem: (value: string, label: string) => this.selectItem(value, label),
       });
     }
-  }
-
-  ngOnDestroy() {
-    this.destroyOverlay();
   }
 
   onDocumentClick(event: Event) {

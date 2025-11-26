@@ -29,7 +29,15 @@ export class ZardDialogRef<T = any, R = any, U = any> {
     if ((this.config.zMaskClosable ?? true) && isPlatformBrowser(this.platformId)) {
       this.overlayRef
         .outsidePointerEvents()
-        .pipe(takeUntil(this.destroy$))
+        .pipe(
+          filter(event => {
+            // Don't close if clicking on another overlay (like select dropdowns)
+            const target = event.target as HTMLElement;
+            const isOverlayClick = target.closest('.cdk-overlay-container, .cdk-overlay-pane');
+            return !isOverlayClick;
+          }),
+          takeUntil(this.destroy$)
+        )
         .subscribe(() => this.close());
     }
 

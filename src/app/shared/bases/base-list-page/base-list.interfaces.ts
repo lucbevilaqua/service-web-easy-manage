@@ -1,5 +1,5 @@
+import { DynamicFieldConfig } from "@shared/interfaces/form-config.interface";
 import { ZardBadgeVariants } from "src/app/ui/components/badge/badge.variants";
-import { CreateConfig } from "@shared/components/create-modal/create-modal.interfaces";
 import { ZardIcon } from "src/app/ui/components/icon/icons";
 
 export type BadgeColorFn = (row: any) => ZardBadgeVariants['zType'];
@@ -58,8 +58,8 @@ export interface BaseListPageConfig {
   pageSize?: number; // Default: 10
   orderByField?: string;
   orderByDirection?: 'asc' | 'desc';
-  filters?: FilterConfig[];
-  createConfig?: CreateConfig[];
+  filters?: DynamicFieldConfig[];
+  createConfig?: DynamicFieldConfig[];
 }
 
 // Filter types
@@ -70,16 +70,6 @@ export interface FilterOption {
   value: any;
 }
 
-export interface FilterConfig {
-  key: string;
-  label: string;
-  type: FilterType;
-  placeholder?: string;
-  options?: FilterOption[]; // For select type
-  min?: number | string; // For range/number
-  max?: number | string; // For range/number
-  step?: number; // For range/number
-}
 
 export interface AppliedFilter {
   key: string;

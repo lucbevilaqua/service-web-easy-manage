@@ -19,6 +19,7 @@ import {
   updateDoc
 } from 'firebase/firestore';
 import { Firestore as AngularFirestore } from '@angular/fire/firestore';
+import { FirestoreCacheService } from './firestore-cache.service';
 
 export interface FirestoreQueryOptions {
   path: string;
@@ -43,6 +44,7 @@ export interface FirestorePageResult<T> {
 })
 export class FirestoreService {
   private readonly angularFirestore = inject(AngularFirestore);
+  private readonly cache = inject(FirestoreCacheService);
   private readonly db = signal<Firestore | null>(null);
   private readonly loading = signal<boolean>(false);
   private readonly error = signal<string | null>(null);
@@ -174,6 +176,12 @@ export class FirestoreService {
       throw new Error('Firestore not initialized');
     }
 
+    // Check cache first
+    const cachedData = this.cache.get(path);
+    if (cachedData) {
+      return cachedData as T[];
+    }
+
     this.loading.set(true);
     this.error.set(null);
 
@@ -183,6 +191,9 @@ export class FirestoreService {
         id: doc.id,
         ...doc.data()
       })) as T[];
+
+      // Store in cache
+      this.cache.set(path, data);
 
       this.loading.set(false);
       return data;
@@ -220,6 +231,10 @@ export class FirestoreService {
     try {
       const docRef = doc(db, path, documentId);
       await deleteDoc(docRef);
+      
+      // Invalidate cache for this collection
+      this.cache.invalidate(path);
+      
       this.loading.set(false);
     } catch (err: any) {
       this.error.set(err.message || 'Error deleting document');
@@ -246,6 +261,10 @@ export class FirestoreService {
       };
 
       const docRef = await addDoc(collection(db, path), dataWithTimestamp);
+      
+      // Invalidate cache for this collection
+      this.cache.invalidate(path);
+      
       this.loading.set(false);
       return docRef.id;
     } catch (err: any) {
@@ -274,6 +293,10 @@ export class FirestoreService {
       };
 
       await updateDoc(docRef, dataWithTimestamp);
+      
+      // Invalidate cache for this collection
+      this.cache.invalidate(path);
+      
       this.loading.set(false);
     } catch (err: any) {
       this.error.set(err.message || 'Error updating document');

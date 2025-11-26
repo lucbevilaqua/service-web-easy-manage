@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup()">
   <div class="grid gap-4 grid-cols-2">
     @for (field of config(); track trackByKey($index, field)) {
-      <z-form-field>
+      <z-form-field [class]="getColSpanClass(field)">
         <z-form-label [zRequired]="field.required ?? false">{{ field.label }}</z-form-label>
         <z-form-control>
           @switch (field.type) {
@@ -10,7 +10,7 @@
                 [formControlName]="field.key"
                 [zPlaceholder]="field.placeholder || 'Select an option'"
               >
-                @for (opt of field.options; track opt.value) {
+                @for (opt of getFieldOptions(field); track opt.value) {
                   <z-select-item [zValue]="opt.value">{{ opt.label }}</z-select-item>
                 }
               </z-select>
@@ -24,8 +24,8 @@
             }
 
             @case ('radio') {
-              <div class="flex flex-col gap-3">
-                @for (opt of field.options; track opt.value) {
+              <div class="flex gap-3">
+                @for (opt of getFieldOptions(field); track opt.value) {
                   <span z-radio [name]="opt.label" [value]="opt.value" [formControlName]="field.key">{{ opt.label }}</span>
                 }
               </div>
