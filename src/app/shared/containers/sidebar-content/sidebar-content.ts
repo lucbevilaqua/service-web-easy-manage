@@ -80,4 +80,12 @@ export class SidebarContent {
   // trackBy helpers for @for track usage
   trackByGroup = (_: number, g: MenuGroup) => g.name;
   trackByItem = (_: number, i: MenuItem) => i.route;
+
+  logout(): void {
+    this.auth.logout({ 
+      logoutParams: {
+        returnTo: window.location.origin 
+      }
+    });
+  }
 }
