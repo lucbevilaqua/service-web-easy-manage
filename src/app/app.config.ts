@@ -7,7 +7,6 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
@@ -32,7 +31,6 @@ export const appConfig: ApplicationConfig = {
     ...(environment.firebase.apiKey && environment.firebase.projectId ? [
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),
-      ...(environment.firebase.databaseURL ? [provideDatabase(() => getDatabase())] : [])
     ] : [])
   ]
 };
