@@ -18,5 +18,12 @@ export const MENU_DATA: MenuGroup[] = [
       { label: 'Gerenciamento de Frota', route: '/fleet-management', icon: 'truck' },
     ],
   },
+  {
+    name: 'Financeiro',
+    items: [
+      { label: 'Formas de Pagamento', route: '/payment-methods', icon: 'credit-card' },
+      { label: 'Calculadora de Taxas', route: '/fee-calculator', icon: 'calculator' },
+    ],
+  },
 ]
 

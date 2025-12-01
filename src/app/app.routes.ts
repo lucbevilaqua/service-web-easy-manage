@@ -71,6 +71,14 @@ export const routes: Routes = [
           config: fleetManagementConfig,
         }
       },
+      {
+        path: 'payment-methods',
+        loadComponent: () => import('./pages/payment-methods/payment-methods').then(m => m.PaymentMethodsPage)
+      },
+      {
+        path: 'fee-calculator',
+        loadComponent: () => import('./pages/fee-calculator/fee-calculator').then(m => m.FeeCalculatorPage)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

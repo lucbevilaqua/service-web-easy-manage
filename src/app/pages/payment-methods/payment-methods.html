@@ -1,0 +1,57 @@
+<div class="flex flex-col h-full gap-4 p-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold tracking-tight">Formas de Pagamento</h1>
+      <p class="text-sm text-muted-foreground">Gerencie as formas de pagamento e taxas de parcelamento.</p>
+    </div>
+    <z-button (click)="openCreateModal()">
+      <z-icon zType="plus" class="mr-2 h-4 w-4" />
+      Nova Forma de Pagamento
+    </z-button>
+  </div>
+
+  <div class="rounded-md border bg-card">
+    <table z-table>
+      <thead z-table-header>
+        <tr z-table-row>
+          <th z-table-head class="w-[200px]">Nome</th>
+          <th z-table-head class="w-[150px]">Tipo</th>
+          <th z-table-head>Descrição</th>
+          <th z-table-head class="w-[100px] text-right">Ações</th>
+        </tr>
+      </thead>
+      <tbody z-table-body>
+        @for (item of data(); track item.id) {
+          <tr z-table-row>
+            <td z-table-cell class="font-medium">{{ item.name }}</td>
+            <td z-table-cell>
+              <z-badge [zType]="getBadgeType(item.type)">{{ item.type }}</z-badge>
+            </td>
+            <td z-table-cell>{{ item.description }}</td>
+            <td z-table-cell class="text-right">
+              <div class="flex justify-end gap-2">
+                <button
+                  z-button
+                  zType="ghost"
+                  zSize="sm"
+                  class="p-1 text-destructive"
+                  title="Excluir"
+                  (click)="deleteItem(item)"
+                >
+                  <z-icon zType="trash" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+        @if (data().length === 0 && !loading()) {
+          <tr z-table-row>
+            <td z-table-cell colspan="4" class="h-24 text-center text-muted-foreground">
+              Nenhuma forma de pagamento encontrada.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

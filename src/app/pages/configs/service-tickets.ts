@@ -1,5 +1,11 @@
 import { BaseListPageConfig } from "@shared/bases/base-list-page/base-list.interfaces";
 
+const status = [
+  { label: 'Concluido', value: 'Concluido' },
+  { label: 'Atendido', value: 'Atendido' },
+  { label: 'Pendente', value: 'Pendente' }
+];
+
 export const serviceTicketsConfig: BaseListPageConfig = {
   title: 'Chamados de Serviço',
   subtitle: 'Visualize e gerencie todos os chamados de serviço técnico.',
@@ -83,10 +89,7 @@ export const serviceTicketsConfig: BaseListPageConfig = {
       label: 'Status',
       type: 'select',
       placeholder: 'Selecione o status',
-      options: [
-        { label: 'Atendido', value: 'Atendido' },
-        { label: 'Pendente', value: 'Pendente' }
-      ]
+      options: status
     },
     {
       key: 'completed',

@@ -101,6 +101,27 @@ export const fleetManagementConfig: BaseListPageConfig = {
       required: true
     },
     {
+      key: 'supplier',
+      label: 'Fornecedor',
+      type: 'text',
+      placeholder: 'Nome do fornecedor',
+      required: false
+    },
+    {
+      key: 'km',
+      label: 'Km',
+      type: 'number',
+      placeholder: '0',
+      required: false
+    },
+    {
+      key: 'invoiceNumber',
+      label: 'Numero da Nota',
+      type: 'text',
+      placeholder: '000000',
+      required: false
+    },
+    {
       key: 'maintenancePerformed',
       label: 'Manutenção Realizada?',
       type: 'radio',

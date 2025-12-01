@@ -77,7 +77,9 @@ import {
   ShoppingCart,
   Package,
   ArrowLeftRight,
-  Truck
+  Truck,
+  CreditCard,
+  Calculator
 } from 'lucide-angular';
 
 export const ZARD_ICONS = {
@@ -160,6 +162,8 @@ export const ZARD_ICONS = {
   package: Package,
   'arrow-left-right': ArrowLeftRight,
   truck: Truck,
+  'credit-card': CreditCard,
+  calculator: Calculator,
 } as const satisfies Record<string, LucideIconData>;
 
 export declare type ZardIcon = keyof typeof ZARD_ICONS | LucideIconData;

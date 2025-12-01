@@ -1,5 +1,11 @@
 import { BaseListPageConfig } from "@shared/bases/base-list-page/base-list.interfaces";
 
+const type = [
+  { label: 'Entrada', value: 'Entrada' },
+  { label: 'Saída', value: 'Saída' },
+  { label: 'Aguardando devolução', value: 'aguardando devolução' }
+];
+
 export const stockMovementConfig: BaseListPageConfig = {
   title: 'Movimentação de Estoque',
   subtitle: 'Gerencie as entradas e saídas de produtos do estoque.',
@@ -57,10 +63,7 @@ export const stockMovementConfig: BaseListPageConfig = {
       label: 'Tipo de Movimentação',
       type: 'select',
       placeholder: 'Selecione o tipo',
-      options: [
-        { label: 'Entrada', value: 'Entrada' },
-        { label: 'Saída', value: 'Saída' }
-      ]
+      options: type
     },
     {
       key: 'responsible',
@@ -87,10 +90,7 @@ export const stockMovementConfig: BaseListPageConfig = {
       label: 'Tipo de Movimentação',
       type: 'radio',
       required: true,
-      options: [
-        { label: 'Entrada', value: 'Entrada' },
-        { label: 'Saída', value: 'Saída' }
-      ]
+      options: type
     },
     {
       key: 'quantity',

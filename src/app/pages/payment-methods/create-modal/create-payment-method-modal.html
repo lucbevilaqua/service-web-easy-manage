@@ -1,0 +1,89 @@
+<form [formGroup]="form" class="flex flex-col gap-4">
+  <div class="grid grid-cols-2 gap-4">
+    <z-form-field>
+      <z-form-label for="name">Nome</z-form-label>
+      <z-form-control>
+        <z-input-group class="w-full">
+          <input zInput id="name" type="text" formControlName="name" placeholder="Ex: Cartão Visa" />
+        </z-input-group>
+      </z-form-control>
+      <z-form-message zType="error" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">Nome é obrigatório</z-form-message>
+    </z-form-field>
+
+    <z-form-field>
+      <z-form-label>Tipo</z-form-label>
+      <z-form-control>
+        <z-select formControlName="type" placeholder="Selecione o tipo">
+          <z-select-item zValue="Credito">Crédito</z-select-item>
+          <z-select-item zValue="Debito">Débito</z-select-item>
+          <z-select-item zValue="Pix">Pix</z-select-item>
+          <z-select-item zValue="Boleto">Boleto</z-select-item>
+          <z-select-item zValue="Outro">Outro</z-select-item>
+        </z-select>
+      </z-form-control>
+      <z-form-message zType="error" *ngIf="form.get('type')?.invalid && form.get('type')?.touched">Tipo é obrigatório</z-form-message>
+    </z-form-field>
+  </div>
+
+  <z-form-field>
+    <z-form-label>Descrição</z-form-label>
+    <z-form-control>
+      <textarea zInput formControlName="description" placeholder="Descrição opcional" rows="2" class="min-h-[80px] border border-input"></textarea>
+    </z-form-control>
+    <z-form-message zType="error" *ngIf="form.get('description')?.invalid && form.get('description')?.touched">Descrição é obrigatória</z-form-message>
+  </z-form-field>
+
+  <div class="border rounded-md p-4 bg-muted/30">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-medium text-sm">Taxas de Parcelamento</h3>
+      <z-button zSize="sm" zVariant="outline" (click)="addFee()" type="button">
+        <z-icon zType="plus" class="mr-2 h-3 w-3" />
+        Adicionar Parcela
+      </z-button>
+    </div>
+
+    <div class="max-h-[200px] overflow-y-auto pr-2 space-y-2" formArrayName="fees">
+      @for (fee of fees.controls; track $index) {
+        <div [formGroupName]="$index" class="flex items-end gap-3">
+          <z-form-field class="w-32">
+            <z-form-label *ngIf="$index === 0">Parcelas</z-form-label>
+            <z-form-control>
+              <z-input-group class="w-full">
+                <input zInput type="number" formControlName="installments" placeholder="Ex: 1" />
+              </z-input-group>
+            </z-form-control>
+            <z-form-message zType="error" *ngIf="form.get('installments')?.invalid && form.get('installments')?.touched">Parcelas é obrigatória</z-form-message>
+          </z-form-field>
+
+          <z-form-field class="flex-1">
+            <z-form-label *ngIf="$index === 0">Taxa (%)</z-form-label>
+            <z-form-control>
+              <z-input-group class="w-full">
+                <input zInput type="number" formControlName="fee" placeholder="Ex: 2.5" step="0.01" />
+              </z-input-group>
+            </z-form-control>
+            <z-form-message zType="error" *ngIf="form.get('fee')?.invalid && form.get('fee')?.touched">Taxa é obrigatória</z-form-message>
+          </z-form-field>
+
+          <button
+            z-button
+            zType="ghost"
+            zSize="sm"
+            class="mb-[2px] text-destructive"
+            title="Excluir"
+            (click)="removeFee($index)"
+          >
+            <z-icon zType="trash" />
+          </button>
+
+        </div>
+      }
+      
+      @if (fees.length === 0) {
+        <div class="text-sm text-muted-foreground text-center py-4">
+          Nenhuma taxa configurada.
+        </div>
+      }
+    </div>
+  </div>
+</form>
